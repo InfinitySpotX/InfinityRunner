@@ -231,52 +231,37 @@ document.addEventListener("keydown", e=>{
   player.lane = Math.max(0, Math.min(2, player.lane));
 });
 
-// ================= TOUCH (APK FIX) =================
+// ================= TOUCH FIXED =================
 let startX = 0;
 let startY = 0;
-let swipeDone = false;
 
-canvas.addEventListener("touchstart", function(e){
-    if(state !== "play") return;
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+}, { passive: false });
 
-    const t = e.touches[0];
-    startX = t.clientX;
-    startY = t.clientY;
-    swipeDone = false;
-}, { passive: true });
+// Ithu WebView page scroll cheyyunnath poornamayum thadayum
+document.addEventListener("touchmove", e => {
+  if (state === "play") {
+    e.preventDefault(); 
+  }
+}, { passive: false });
 
-canvas.addEventListener("touchmove", function(e){
-    if(state !== "play" || swipeDone) return;
+document.addEventListener("touchend", e => {
+  if (state !== "play") return;
 
-    const t = e.touches[0];
+  let diffX = e.changedTouches[0].clientX - startX;
+  let diffY = e.changedTouches[0].clientY - startY;
 
-    const dx = t.clientX - startX;
-    const dy = t.clientY - startY;
+  // Melelottum thazhottum swipe cheyyubol lane maarathirikkaan (Horizontal check)
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX > 40) player.lane++;  // Right swipe
+    if (diffX < -40) player.lane--; // Left swipe
 
-    // Ignore mostly vertical movement
-    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40){
+    player.lane = Math.max(0, Math.min(2, player.lane));
+  }
+}, { passive: false });
 
-        if(dx > 0){
-            player.lane = Math.min(2, player.lane + 1);
-        }else{
-            player.lane = Math.max(0, player.lane - 1);
-        }
-
-        swipeDone = true;
-    }
-}, { passive: true });
-
-canvas.addEventListener("touchend", function(){
-    swipeDone = false;
-    startX = 0;
-    startY = 0;
-}, { passive: true });
-
-canvas.addEventListener("touchcancel", function(){
-    swipeDone = false;
-    startX = 0;
-    startY = 0;
-}, { passive: true });
 
 // ================= SPAWN =================
 setInterval(()=>{
