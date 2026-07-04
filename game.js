@@ -231,41 +231,51 @@ document.addEventListener("keydown", e=>{
   player.lane = Math.max(0, Math.min(2, player.lane));
 });
 
-// ================= TOUCH (NEW APK FIX) =================
+// ================= TOUCH (APK FIX) =================
 let startX = 0;
-let touchActive = false;
+let startY = 0;
+let swipeDone = false;
 
-document.addEventListener("touchstart", (e) => {
-  if(state !== "play") return;
+canvas.addEventListener("touchstart", function(e){
+    if(state !== "play") return;
 
-  touchActive = true;
-  startX = e.touches[0].clientX;
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    swipeDone = false;
 }, { passive: true });
 
-document.addEventListener("touchmove", (e) => {
-  if(state !== "play" || !touchActive) return;
+canvas.addEventListener("touchmove", function(e){
+    if(state !== "play" || swipeDone) return;
 
-  const currentX = e.touches[0].clientX;
-  const diff = currentX - startX;
+    const t = e.touches[0];
 
-  if(diff > 40){
-    player.lane = Math.min(2, player.lane + 1);
-    startX = currentX;
-  }
-  else if(diff < -40){
-    player.lane = Math.max(0, player.lane - 1);
-    startX = currentX;
-  }
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    // Ignore mostly vertical movement
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40){
+
+        if(dx > 0){
+            player.lane = Math.min(2, player.lane + 1);
+        }else{
+            player.lane = Math.max(0, player.lane - 1);
+        }
+
+        swipeDone = true;
+    }
 }, { passive: true });
 
-document.addEventListener("touchend", () => {
-  touchActive = false;
-  startX = 0;
+canvas.addEventListener("touchend", function(){
+    swipeDone = false;
+    startX = 0;
+    startY = 0;
 }, { passive: true });
 
-document.addEventListener("touchcancel", () => {
-  touchActive = false;
-  startX = 0;
+canvas.addEventListener("touchcancel", function(){
+    swipeDone = false;
+    startX = 0;
+    startY = 0;
 }, { passive: true });
 
 // ================= SPAWN =================
