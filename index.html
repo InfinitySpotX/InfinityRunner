@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Infinity Spot Runner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div id="startScreen" class="screen">
+    <h1 class="title">INFINITY SPOT</h1>
+    <p class="sub">Endless Runner Premium</p>
+    <button onclick="startGame()" class="btn primary">▶ PLAY</button>
+    <button onclick="openShop()" class="btn">👕 SKINS</button>
+    <button onclick="openSettings()" class="btn">⚙ SETTINGS</button>
+</div>
+
+<div id="shop" class="screen hidden"></div>
+
+<div id="settings" class="screen hidden">
+    <h2>SETTINGS</h2>
+    <p>Controls: Arrow Keys / Swipe</p>
+    <button onclick="closeSettings()" class="btn">BACK</button>
+</div>
+
+<div id="gameOver" class="screen hidden">
+    <h1>GAME OVER</h1>
+    <p id="finalScore">Score: 0</p>
+    <button onclick="retry()" class="btn primary">RETRY</button>
+    <button onclick="goMenu()" class="btn">MENU</button>
+</div>
+
+<canvas id="game"></canvas>
+
+<div id="hud">Score: 0</div>
+
+<script src="game.js"></script>
+</body>
+</html>
