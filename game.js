@@ -231,23 +231,42 @@ document.addEventListener("keydown", e=>{
   player.lane = Math.max(0, Math.min(2, player.lane));
 });
 
-// ================= TOUCH =================
+// ================= TOUCH (NEW APK FIX) =================
 let startX = 0;
+let touchActive = false;
 
-document.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e=>{
+document.addEventListener("touchstart", (e) => {
   if(state !== "play") return;
 
-  let diff = e.changedTouches[0].clientX - startX;
+  touchActive = true;
+  startX = e.touches[0].clientX;
+}, { passive: true });
 
-  if(diff > 40) player.lane++;
-  if(diff < -40) player.lane--;
+document.addEventListener("touchmove", (e) => {
+  if(state !== "play" || !touchActive) return;
 
-  player.lane = Math.max(0, Math.min(2, player.lane));
-});
+  const currentX = e.touches[0].clientX;
+  const diff = currentX - startX;
+
+  if(diff > 40){
+    player.lane = Math.min(2, player.lane + 1);
+    startX = currentX;
+  }
+  else if(diff < -40){
+    player.lane = Math.max(0, player.lane - 1);
+    startX = currentX;
+  }
+}, { passive: true });
+
+document.addEventListener("touchend", () => {
+  touchActive = false;
+  startX = 0;
+}, { passive: true });
+
+document.addEventListener("touchcancel", () => {
+  touchActive = false;
+  startX = 0;
+}, { passive: true });
 
 // ================= SPAWN =================
 setInterval(()=>{
