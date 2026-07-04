@@ -1,0 +1,557 @@
+/* ===========================
+   INFINITY SPOT PREMIUM CSS
+   PART 1
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+    radial-gradient(circle at 20% 20%,rgba(0,255,255,.15),transparent 35%),
+    radial-gradient(circle at 80% 70%,rgba(0,120,255,.15),transparent 40%),
+    linear-gradient(#07131c,#000);
+
+    animation:bgMove 8s ease-in-out infinite alternate;
+}
+
+.bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);
+
+    background-size:60px 60px;
+
+    opacity:.3;
+}
+
+@keyframes bgMove{
+
+    from{
+        transform:scale(1);
+        filter:brightness(1);
+    }
+
+    to{
+        transform:scale(1.08);
+        filter:brightness(1.2);
+    }
+
+}
+
+/* ================= GLASS SCREEN ================= */
+
+.screen{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:82%;
+    max-width:340px;
+
+    padding:22px;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.4),
+    0 0 20px rgba(0,255,255,.18),
+    inset 0 1px 1px rgba(255,255,255,.15);
+
+    color:#fff;
+    text-align:center;
+
+    overflow:hidden;
+
+    z-index:20;
+
+    animation:screenFloat 5s ease-in-out infinite;
+}
+
+.screen::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-60%;
+    left:-120%;
+
+    width:80%;
+    height:220%;
+
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.20),
+        transparent
+    );
+
+    transform:rotate(20deg);
+
+    animation:glassShine 5s linear infinite;
+
+    pointer-events:none;
+
+}
+
+.hidden{
+    display:none;
+}
+
+@keyframes glassShine{
+
+    from{
+        left:-120%;
+    }
+
+    to{
+        left:180%;
+    }
+
+}
+
+@keyframes screenFloat{
+
+    0%,100%{
+        transform:translate(-50%,-50%);
+    }
+
+    50%{
+        transform:translate(-50%,-52%);
+    }
+
+}
+
+/* ================= TITLE ================= */
+
+.title{
+
+    font-size:32px;
+    letter-spacing:2px;
+
+    color:cyan;
+
+    text-shadow:
+    0 0 10px cyan,
+    0 0 20px cyan,
+    0 0 40px cyan;
+
+}
+
+.sub{
+
+    margin-top:8px;
+    color:#cfcfcf;
+
+}
+
+/* ================= BUTTONS ================= */
+
+.btn{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    backdrop-filter:blur(8px);
+
+}
+
+.btn:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 0 18px cyan;
+
+}
+
+.btn:active{
+
+    transform:scale(.95);
+
+}
+
+.primary{
+
+    background:linear-gradient(90deg,#00ffff,#00bfff);
+
+    color:#000;
+
+    box-shadow:
+    0 0 18px cyan,
+    0 0 40px rgba(0,255,255,.45);
+
+}
+
+/* ================= CANVAS ================= */
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  filter: brightness(1.05);
+}
+/* ===========================
+   INFINITY SPOT PREMIUM CSS
+   PART 2
+=========================== */
+
+/* ===== PREMIUM HUD ===== */
+
+#hud{
+    position:fixed;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:999;
+
+    min-width:170px;
+    padding:12px 22px;
+
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    color:#fff;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(0,255,255,.3);
+
+    box-shadow:
+        0 0 15px rgba(0,255,255,.25),
+        0 0 35px rgba(0,255,255,.15);
+
+    animation:
+        hudFloat 3s ease-in-out infinite,
+        hudGlow 2s ease-in-out infinite;
+}
+
+@keyframes hudFloat{
+
+    0%,100%{
+        transform:translateX(-50%) translateY(0);
+    }
+
+    50%{
+        transform:translateX(-50%) translateY(-4px);
+    }
+
+}
+
+@keyframes hudGlow{
+
+    0%,100%{
+
+        box-shadow:
+        0 0 15px rgba(0,255,255,.25),
+        0 0 35px rgba(0,255,255,.15);
+
+    }
+
+    50%{
+
+        box-shadow:
+        0 0 25px cyan,
+        0 0 50px rgba(0,255,255,.4);
+
+    }
+
+}
+
+/* ===== SCORE POP ===== */
+
+.scoreFlash{
+
+    animation:scoreFlash .3s;
+
+}
+
+@keyframes scoreFlash{
+
+    0%{
+        transform:translateX(-50%) scale(1);
+    }
+
+    50%{
+        transform:translateX(-50%) scale(1.12);
+    }
+
+    100%{
+        transform:translateX(-50%) scale(1);
+    }
+
+}
+
+/* ===== SHOP ===== */
+
+#shop{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:88%;
+    max-width:360px;
+
+    max-height:70vh;
+
+    overflow-y:auto;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:rgba(15,15,20,.92);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(0,255,255,.18);
+
+    box-shadow:
+        0 0 25px rgba(0,255,255,.25),
+        0 0 60px rgba(0,255,255,.08);
+
+    z-index:999;
+
+    animation:shopOpen .3s ease;
+
+}
+
+@keyframes shopOpen{
+
+    from{
+
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.85);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+
+    }
+
+}
+
+#shop h2{
+
+    margin-bottom:15px;
+
+    color:cyan;
+
+    text-shadow:
+        0 0 10px cyan,
+        0 0 25px cyan;
+
+}
+
+#shop div{
+
+    margin:14px 0;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.25s;
+
+}
+
+#shop div:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 18px rgba(0,255,255,.25);
+
+}
+
+#shop h3{
+
+    color:cyan;
+
+    margin-bottom:6px;
+
+}
+
+#shop p{
+
+    color:#ccc;
+
+    margin-bottom:10px;
+
+}
+
+#shop button{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:bold;
+
+    background:linear-gradient(90deg,#00ffff,#00bfff);
+
+    color:#000;
+
+    transition:.25s;
+
+}
+
+#shop button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+        0 0 20px cyan;
+
+}
+
+.shop-close-btn{
+
+    margin-top:15px !important;
+
+    background:#ff3b30 !important;
+
+    color:#fff !important;
+
+}
+
+/* ===== SCROLLBAR ===== */
+
+#shop::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+#shop::-webkit-scrollbar-thumb{
+
+    background:cyan;
+    border-radius:20px;
+
+}
+
+/* ===== SHIELD GLOW ===== */
+
+.playerShield{
+
+    filter:
+        drop-shadow(0 0 12px cyan)
+        drop-shadow(0 0 30px cyan);
+
+}
+
+/* ===== POWERUP GLOW ===== */
+
+.powerGlow{
+
+    animation:powerGlow 1s infinite alternate;
+
+}
+
+@keyframes powerGlow{
+
+    from{
+
+        filter:drop-shadow(0 0 8px cyan);
+
+    }
+
+    to{
+
+        filter:drop-shadow(0 0 20px cyan);
+
+    }
+
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:600px){
+
+    .title{
+        font-size:28px;
+    }
+
+    .btn{
+        font-size:15px;
+    }
+
+    #hud{
+        font-size:17px;
+        padding:10px 18px;
+    }
+
+      }
